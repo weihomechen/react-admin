@@ -1,6 +1,16 @@
-[English](./README.md) | 简体中文 | [Русский](./README.ru-RU.md)
 
 <h1 align="center">Ant Design Pro</h1>
+
+## 说明
+
+本项目fork自[ant-design-pro](https://github.com/ant-design/ant-design-pro/)，基于自己的情况做出一定的调整修改，主要有：
+
+- 配套基于Node的[服务端](https://github.com/weihomechen/react-admin-node)（使用`egg`、数据库使用`mongodb`）
+- 默认不使用`mock`功能，可以使用 `npm run start:mock` 开启mock
+- 部分页面数据结构的更改（为了易于`mongodb`使用）
+- 部分处理流程（如异步请求、报错）的更改
+
+同时fork后会显示`behind XX commits`, 所以独立成本项目，以后根据`ant-design-pro`、`react`、`dva`等进行维护和升级。
 
 <div align="center">
 
@@ -15,13 +25,6 @@
 ![](https://user-images.githubusercontent.com/8186664/44953195-581e3d80-aec4-11e8-8dcb-54b9db38ec11.png)
 
 </div>
-
-- 预览：http://preview.pro.ant.design
-- 首页：http://pro.ant.design/index-cn
-- 使用文档：http://pro.ant.design/docs/getting-started-cn
-- 更新日志: http://pro.ant.design/docs/changelog-cn
-- 常见问题：http://pro.ant.design/docs/faq-cn
-- 国内镜像：http://ant-design-pro.gitee.io
 
 ## 特性
 
@@ -73,8 +76,8 @@
 ## 使用
 
 ```bash
-$ git clone https://github.com/ant-design/ant-design-pro.git --depth=1
-$ cd ant-design-pro
+$ git clone https://github.com/weihomechen/react-admin.git
+$ cd react-admin
 $ npm install
 $ npm start         # 访问 http://localhost:8000
 ```
@@ -88,11 +91,3 @@ $ npm start         # 访问 http://localhost:8000
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
 | --------- | --------- | --------- | --------- | --------- |
 | IE11, Edge| last 2 versions| last 2 versions| last 2 versions| last 2 versions
-
-## 参与贡献
-
-我们非常欢迎你的贡献，你可以通过以下方式和我们一起共建 :smiley:：
-
-- 在你的公司或个人项目中使用 Ant Design Pro。
-- 通过 [Issue](http://github.com/ant-design/ant-design-pro/issues) 报告 bug 或进行咨询。
-- 提交 [Pull Request](http://github.com/ant-design/ant-design-pro/pulls) 改进 Pro 的代码。
