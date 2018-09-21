@@ -1,5 +1,5 @@
 
-<h1 align="center">Ant Design Pro</h1>
+<h1 align="center">React Admin</h1>
 
 ## 说明
 
@@ -13,8 +13,6 @@
 同时fork后会显示`behind XX commits`, 所以独立成本项目，以后根据`ant-design-pro`、`react`、`dva`等进行维护和升级。
 
 <div align="center">
-
-开箱即用的中台前端/设计解决方案。
 
 [![CircleCI Status](https://circleci.com/gh/ant-design/ant-design-pro.svg?style=svg)](https://circleci.com/gh/ant-design/ant-design-pro/)
 [![Build status](https://ci.appveyor.com/api/projects/status/67fxu2by3ibvqtat/branch/master?svg=true)](https://ci.appveyor.com/project/afc163/ant-design-pro/branch/master)
