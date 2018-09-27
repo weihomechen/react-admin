@@ -103,15 +103,15 @@ export async function updateFakeList(params) {
   });
 }
 
-export async function fakeAccountLogin(params) {
-  return request('/admin/api/login/account', {
+export async function login(params) {
+  return request('/admin/api/user/login', {
     method: 'POST',
     body: params,
   });
 }
 
 export async function fakeRegister(params) {
-  return request('/admin/api/register', {
+  return request('/admin/api/user/register', {
     method: 'POST',
     body: params,
   });

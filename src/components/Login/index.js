@@ -19,8 +19,8 @@ class Login extends Component {
   static defaultProps = {
     className: '',
     defaultActiveKey: '',
-    onTabChange: () => {},
-    onSubmit: () => {},
+    onTabChange: () => { },
+    onSubmit: () => { },
   };
 
   constructor(props) {
@@ -36,6 +36,7 @@ class Login extends Component {
     this.setState({
       type,
     });
+
     const { onTabChange } = this.props;
     onTabChange(type);
   };
@@ -43,6 +44,7 @@ class Login extends Component {
   getContext = () => {
     const { tabs } = this.state;
     const { form } = this.props;
+
     return {
       tabUtil: {
         addTab: id => {
@@ -97,6 +99,7 @@ class Login extends Component {
         otherChildren.push(item);
       }
     });
+
     return (
       <LoginContext.Provider value={this.getContext()}>
         <div className={classNames(className, styles.login)}>
@@ -114,8 +117,8 @@ class Login extends Component {
                 {otherChildren}
               </React.Fragment>
             ) : (
-              [...children]
-            )}
+                [...children]
+              )}
           </Form>
         </div>
       </LoginContext.Provider>

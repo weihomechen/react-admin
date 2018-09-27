@@ -169,18 +169,14 @@ class Register extends Component {
         <h3>注册</h3>
         <Form onSubmit={this.handleSubmit}>
           <FormItem>
-            {getFieldDecorator('mail', {
+            {getFieldDecorator('name', {
               rules: [
                 {
-                  required: true,
-                  message: '请输入邮箱地址！',
-                },
-                {
-                  type: 'email',
-                  message: '邮箱地址格式错误！',
+                  required: false,
+                  message: '请输入昵称！',
                 },
               ],
-            })(<Input size="large" placeholder="邮箱" />)}
+            })(<Input size="large" placeholder="昵称" />)}
           </FormItem>
           <FormItem help={help}>
             <Popover
@@ -251,10 +247,10 @@ class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: '请输入验证码！',
+                      message: '模拟的验证码都为1234',
                     },
                   ],
-                })(<Input size="large" placeholder="验证码" />)}
+                })(<Input size="large" placeholder="模拟的验证码都为1234" />)}
               </Col>
               <Col span={8}>
                 <Button
@@ -268,6 +264,20 @@ class Register extends Component {
               </Col>
             </Row>
           </FormItem>
+          {/* <FormItem>
+            {getFieldDecorator('mail', {
+              rules: [
+                {
+                  required: false,
+                  message: '邮箱地址，可选',
+                },
+                {
+                  type: 'email',
+                  message: '邮箱地址格式错误！',
+                },
+              ],
+            })(<Input size="large" placeholder="邮箱地址，可选" />)}
+          </FormItem> */}
           <FormItem>
             <Button
               size="large"
