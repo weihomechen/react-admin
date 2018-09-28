@@ -75,13 +75,15 @@ class Info extends Component {
   };
 
   resize = () => {
-    if (!this.main) {
-      return;
-    }
     requestAnimationFrame(() => {
       let mode = 'inline';
-      const { offsetWidth } = this.main;
-      if (this.main.offsetWidth < 641 && offsetWidth > 400) {
+      const { main = {} } = this;
+      if (!main) {
+        return;
+      }
+
+      const { offsetWidth } = main;
+      if (main.offsetWidth < 641 && offsetWidth > 400) {
         mode = 'horizontal';
       }
       if (window.innerWidth < 768 && offsetWidth > 400) {
@@ -95,7 +97,7 @@ class Info extends Component {
 
   render() {
     const { children, currentUser } = this.props;
-    if (!currentUser.userid) {
+    if (!currentUser._id) {
       return '';
     }
     const { mode, selectKey } = this.state;

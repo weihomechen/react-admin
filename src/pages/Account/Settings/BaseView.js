@@ -28,6 +28,11 @@ const AvatarView = ({ avatar }) => (
 );
 
 const validatorGeographic = (rule, value, callback) => {
+  if (value.length === 0) {
+    callback();
+    return;
+  }
+
   const { province, city } = value;
   if (!province.key) {
     callback('Please input your province!');
@@ -39,11 +44,7 @@ const validatorGeographic = (rule, value, callback) => {
 };
 
 const validatorPhone = (rule, value, callback) => {
-  const values = value.split('-');
-  if (!values[0]) {
-    callback('Please input your area code!');
-  }
-  if (!values[1]) {
+  if (!value) {
     callback('Please input your phone number!');
   }
   callback();
@@ -80,6 +81,20 @@ class BaseView extends Component {
     this.view = ref;
   };
 
+  handleSubmit = () => {
+    const { form } = this.props;
+
+    form.validateFields((err, values) => {
+      if (!err) {
+        const { dispatch } = this.props;
+        dispatch({
+          type: 'user/update',
+          payload: values,
+        });
+      }
+    });
+  };
+
   render() {
     const {
       form: { getFieldDecorator },
@@ -87,17 +102,7 @@ class BaseView extends Component {
     return (
       <div className={styles.baseView} ref={this.getViewDom}>
         <div className={styles.left}>
-          <Form layout="vertical" onSubmit={this.handleSubmit} hideRequiredMark>
-            <FormItem label={formatMessage({ id: 'app.settings.basic.email' })}>
-              {getFieldDecorator('email', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'app.settings.basic.email-message' }, {}),
-                  },
-                ],
-              })(<Input />)}
-            </FormItem>
+          <Form layout="vertical" hideRequiredMark>
             <FormItem label={formatMessage({ id: 'app.settings.basic.nickname' })}>
               {getFieldDecorator('name', {
                 rules: [
@@ -108,11 +113,32 @@ class BaseView extends Component {
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label={formatMessage({ id: 'app.settings.basic.profile' })}>
-              {getFieldDecorator('profile', {
+            <FormItem label={formatMessage({ id: 'app.settings.basic.phone' })}>
+              {getFieldDecorator('mobile', {
                 rules: [
                   {
                     required: true,
+                    message: formatMessage({ id: 'app.settings.basic.phone-message' }, {}),
+                  },
+                  { validator: validatorPhone },
+                ],
+              })(<PhoneView />)}
+            </FormItem>
+            <FormItem label={formatMessage({ id: 'app.settings.basic.email' })}>
+              {getFieldDecorator('email', {
+                rules: [
+                  {
+                    required: false,
+                    message: formatMessage({ id: 'app.settings.basic.email-message' }, {}),
+                  },
+                ],
+              })(<Input />)}
+            </FormItem>
+            <FormItem label={formatMessage({ id: 'app.settings.basic.profile' })}>
+              {getFieldDecorator('signature', {
+                rules: [
+                  {
+                    required: false,
                     message: formatMessage({ id: 'app.settings.basic.profile-message' }, {}),
                   },
                 ],
@@ -124,7 +150,7 @@ class BaseView extends Component {
               )}
             </FormItem>
             <FormItem label={formatMessage({ id: 'app.settings.basic.country' })}>
-              {getFieldDecorator('country', {
+              {getFieldDecorator('countryCode', {
                 rules: [
                   {
                     required: true,
@@ -133,7 +159,7 @@ class BaseView extends Component {
                 ],
               })(
                 <Select style={{ maxWidth: 220 }}>
-                  <Option value="China">中国</Option>
+                  <Option value="86">中国</Option>
                 </Select>
               )}
             </FormItem>
@@ -141,7 +167,7 @@ class BaseView extends Component {
               {getFieldDecorator('geographic', {
                 rules: [
                   {
-                    required: true,
+                    required: false,
                     message: formatMessage({ id: 'app.settings.basic.geographic-message' }, {}),
                   },
                   {
@@ -154,24 +180,13 @@ class BaseView extends Component {
               {getFieldDecorator('address', {
                 rules: [
                   {
-                    required: true,
+                    required: false,
                     message: formatMessage({ id: 'app.settings.basic.address-message' }, {}),
                   },
                 ],
               })(<Input />)}
             </FormItem>
-            <FormItem label={formatMessage({ id: 'app.settings.basic.phone' })}>
-              {getFieldDecorator('phone', {
-                rules: [
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'app.settings.basic.phone-message' }, {}),
-                  },
-                  { validator: validatorPhone },
-                ],
-              })(<PhoneView />)}
-            </FormItem>
-            <Button type="primary">
+            <Button type="primary" onClick={this.handleSubmit}>
               <FormattedMessage
                 id="app.settings.basic.update"
                 defaultMessage="Update Information"

@@ -1,4 +1,5 @@
-import { query as queryUsers, queryCurrent } from '@/services/user';
+import { query as queryUsers, queryCurrent, updateUser } from '@/services/user';
+import { message } from 'antd';
 
 export default {
   namespace: 'user',
@@ -22,6 +23,18 @@ export default {
         type: 'saveCurrentUser',
         payload: data,
       });
+    },
+    *update({ payload }, { call, put, select }) {
+      const { currentUser } = yield select(state => state.user);
+      const user = {
+        ...currentUser,
+        ...payload,
+      };
+      const { success } = yield call(updateUser, user);
+      if (success) {
+        message.success('信息更新成功');
+        yield put({ type: 'fetchCurrent' });
+      }
     },
   },
 

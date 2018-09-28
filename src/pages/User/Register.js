@@ -32,7 +32,7 @@ class Register extends Component {
     confirmDirty: false,
     visible: false,
     help: '',
-    prefix: '86',
+    countryCode: '86',
   };
 
   componentDidUpdate() {
@@ -81,12 +81,12 @@ class Register extends Component {
     const { form, dispatch } = this.props;
     form.validateFields({ force: true }, (err, values) => {
       if (!err) {
-        const { prefix } = this.state;
+        const { countryCode } = this.state;
         dispatch({
           type: 'register/submit',
           payload: {
             ...values,
-            prefix,
+            countryCode,
           },
         });
       }
@@ -139,7 +139,7 @@ class Register extends Component {
 
   changePrefix = value => {
     this.setState({
-      prefix: value,
+      countryCode: value,
     });
   };
 
@@ -163,7 +163,7 @@ class Register extends Component {
   render() {
     const { form, submitting } = this.props;
     const { getFieldDecorator } = form;
-    const { count, prefix, help, visible } = this.state;
+    const { count, countryCode, help, visible } = this.state;
     return (
       <div className={styles.main}>
         <h3>注册</h3>
@@ -219,7 +219,7 @@ class Register extends Component {
             <InputGroup compact>
               <Select
                 size="large"
-                value={prefix}
+                value={countryCode}
                 onChange={this.changePrefix}
                 style={{ width: '20%' }}
               >

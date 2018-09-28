@@ -28,7 +28,6 @@ class GeographicView extends PureComponent {
 
   componentDidUpdate(props) {
     const { dispatch, value } = this.props;
-
     if (!props.value && !!value && !!value.province) {
       dispatch({
         type: 'geographic/fetchCity',
