@@ -1,9 +1,7 @@
 @import '~antd/lib/style/themes/default.less';
-
 .baseView {
   display: flex;
   padding-top: 12px;
-
   .left {
     max-width: 448px;
     min-width: 224px;
@@ -31,13 +29,19 @@
       width: 144px;
       text-align: center;
     }
+    .avatarUploader {
+      img {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+      }
+    }
   }
 }
 
 @media screen and (max-width: @screen-xl) {
   .baseView {
     flex-direction: column-reverse;
-
     .right {
       padding: 20px;
       display: flex;

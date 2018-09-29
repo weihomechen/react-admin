@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-bind */
 import React, { Component, Fragment } from 'react';
 import { formatMessage, FormattedMessage } from 'umi/locale';
-import { Form, Input, Upload, Select, Button } from 'antd';
+import { Form, Input, Upload, Select, Button, Icon, message } from 'antd';
 import { connect } from 'dva';
 import styles from './BaseView.less';
 import GeographicView from './GeographicView';
@@ -10,20 +11,19 @@ import PhoneView from './PhoneView';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-// 头像组件 方便以后独立，增加裁剪之类的功能
-const AvatarView = ({ avatar }) => (
+function beforeUpload(file) {
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error('请选择小于2M的图片');
+  }
+
+  return isLt2M;
+}
+
+const uploadButton = (
   <Fragment>
-    <div className={styles.avatar_title}>Avatar</div>
-    <div className={styles.avatar}>
-      <img src={avatar} alt="avatar" />
-    </div>
-    <Upload fileList={[]}>
-      <div className={styles.button_view}>
-        <Button icon="upload">
-          <FormattedMessage id="app.settings.basic.avatar" defaultMessage="Change avatar" />
-        </Button>
-      </div>
-    </Upload>
+    <Icon type="plus" />
+    <div className={styles.uploadText}>点击上传</div>
   </Fragment>
 );
 
@@ -68,15 +68,6 @@ class BaseView extends Component {
     });
   };
 
-  getAvatarURL() {
-    const { currentUser } = this.props;
-    if (currentUser.avatar) {
-      return currentUser.avatar;
-    }
-    const url = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
-    return url;
-  }
-
   getViewDom = ref => {
     this.view = ref;
   };
@@ -95,10 +86,37 @@ class BaseView extends Component {
     });
   };
 
+  uploader = (_id, param) => {
+    const { dispatch } = this.props;
+    const xhr = new XMLHttpRequest();
+    const fd = new FormData();
+    const errorFn = () => {
+      message.error('上传失败');
+    };
+
+    fd.append('_id', _id);
+    fd.append('file', param.file);
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        message.success('头像上传成功');
+        dispatch({ type: 'user/fetchCurrent' });
+      }
+    };
+
+    xhr.addEventListener('error', errorFn, false);
+    xhr.addEventListener('abort', errorFn, false);
+    xhr.open('POST', param.action);
+    xhr.send(fd);
+  };
+
   render() {
     const {
       form: { getFieldDecorator },
+      currentUser,
     } = this.props;
+    const { _id, avatar } = currentUser;
+
     return (
       <div className={styles.baseView} ref={this.getViewDom}>
         <div className={styles.left}>
@@ -195,7 +213,17 @@ class BaseView extends Component {
           </Form>
         </div>
         <div className={styles.right}>
-          <AvatarView avatar={this.getAvatarURL()} />
+          <div className={styles.avatar_title}>Avatar</div>
+          <Upload
+            listType="picture-card"
+            className={styles.avatarUploader}
+            showUploadList={false}
+            action="/admin/api/user/upload"
+            beforeUpload={beforeUpload}
+            customRequest={this.uploader.bind(this, _id)}
+          >
+            {avatar ? <img src={avatar} alt="" /> : uploadButton}
+          </Upload>
         </div>
       </div>
     );
