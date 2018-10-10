@@ -108,6 +108,10 @@ export default {
   'app.settings.security.modify': 'Modify',
   'app.settings.security.set': 'Set',
   'app.settings.security.bind': 'Bind',
+  'app.settings.security.old-password': 'Please input your old password!',
+  'app.settings.security.new-password': 'Please input your new password!',
+  'app.settings.security.confirm-password':
+    'confirm password shouled be the same with new password',
   'app.settings.binding.taobao': 'Binding Taobao',
   'app.settings.binding.taobao-description': 'Currently unbound Taobao account',
   'app.settings.binding.alipay': 'Binding Alipay',

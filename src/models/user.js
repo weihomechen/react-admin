@@ -1,4 +1,4 @@
-import { query as queryUsers, queryCurrent, updateUser } from '@/services/user';
+import { query as queryUsers, queryCurrent, updateUser, updateSecurity } from '@/services/user';
 import { message } from 'antd';
 
 export default {
@@ -35,6 +35,14 @@ export default {
         message.success('信息更新成功');
         yield put({ type: 'fetchCurrent' });
       }
+    },
+    *updateSecurity({ payload }, { call, put }) {
+      const { success } = yield call(updateSecurity, payload);
+      if (success) {
+        message.success('信息更新成功');
+        yield put({ type: 'fetchCurrent' });
+      }
+      return success;
     },
   },
 

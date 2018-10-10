@@ -1,8 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { formatMessage, FormattedMessage } from 'umi/locale';
-import { List } from 'antd';
+import { List, Form, Modal, Input } from 'antd';
+import { connect } from 'dva';
 // import { getTimeDistance } from '@/utils/utils';
 
+const FormItem = Form.Item;
+const formItemLayout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 18 },
+};
 const passwordStrength = {
   strong: (
     <font className="strong">
@@ -22,7 +28,23 @@ const passwordStrength = {
   ),
 };
 
+@connect(({ user }) => ({
+  currentUser: user.currentUser,
+}))
+@Form.create()
 class SecurityView extends Component {
+  constructor() {
+    super();
+    this.state = {
+      modalVisible: false,
+      type: 'pwd',
+    };
+  }
+
+  showModal = () => {
+    this.setState({ modalVisible: true, type: 'pwd' });
+  };
+
   getData = () => [
     {
       title: formatMessage({ id: 'app.settings.security.password' }, {}),
@@ -33,7 +55,7 @@ class SecurityView extends Component {
         </Fragment>
       ),
       actions: [
-        <a>
+        <a onClick={() => this.showModal('pwd')}>
           <FormattedMessage id="app.settings.security.modify" defaultMessage="Modify" />
         </a>,
       ],
@@ -43,9 +65,9 @@ class SecurityView extends Component {
       description: `${formatMessage(
         { id: 'app.settings.security.phone-description' },
         {}
-      )}：138****8293`,
+      )}：18888888888`,
       actions: [
-        <a>
+        <a onClick={() => this.showModal('mobile')}>
           <FormattedMessage id="app.settings.security.modify" defaultMessage="Modify" />
         </a>,
       ],
@@ -54,7 +76,7 @@ class SecurityView extends Component {
       title: formatMessage({ id: 'app.settings.security.question' }, {}),
       description: formatMessage({ id: 'app.settings.security.question-description' }, {}),
       actions: [
-        <a>
+        <a onClick={() => this.showModal('security')}>
           <FormattedMessage id="app.settings.security.set" defaultMessage="Set" />
         </a>,
       ],
@@ -66,7 +88,7 @@ class SecurityView extends Component {
         {}
       )}：ant***sign.com`,
       actions: [
-        <a>
+        <a onClick={() => this.showModal('mail')}>
           <FormattedMessage id="app.settings.security.modify" defaultMessage="Modify" />
         </a>,
       ],
@@ -75,14 +97,99 @@ class SecurityView extends Component {
       title: formatMessage({ id: 'app.settings.security.mfa' }, {}),
       description: formatMessage({ id: 'app.settings.security.mfa-description' }, {}),
       actions: [
-        <a>
+        <a onClick={() => this.showModal('MFA')}>
           <FormattedMessage id="app.settings.security.bind" defaultMessage="Bind" />
         </a>,
       ],
     },
   ];
 
+  checkPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('两次输入的密码不匹配!');
+    } else {
+      callback();
+    }
+  };
+
+  getFormItems = type =>
+    ({
+      pwd: [
+        {
+          lable: '旧密码',
+          key: 'oldPassword',
+          inputType: 'password',
+          rules: [
+            {
+              required: true,
+              message: formatMessage({ id: 'app.settings.security.old-password' }, {}),
+            },
+          ],
+        },
+        {
+          lable: '新密码',
+          key: 'password',
+          inputType: 'password',
+          rules: [
+            {
+              required: true,
+              message: formatMessage({ id: 'app.settings.security.new-password' }, {}),
+            },
+          ],
+        },
+        {
+          lable: '确认密码',
+          key: 'confirm',
+          inputType: 'password',
+          rules: [
+            {
+              required: true,
+              message: formatMessage({ id: 'app.settings.security.confirm-password' }, {}),
+            },
+            {
+              validator: this.checkPassword,
+            },
+          ],
+        },
+      ],
+      mobile: [],
+      security: [],
+      mail: [],
+      MFA: [],
+    }[type]);
+
+  hideModal = () => {
+    this.setState({ modalVisible: false });
+  };
+
+  submit = () => {
+    const { form, dispatch } = this.props;
+    const { type } = this.state;
+
+    form.validateFields((error, values) => {
+      if (!error) {
+        dispatch({
+          type: 'user/updateSecurity',
+          payload: {
+            ...values,
+            type,
+          },
+        }).then(success => {
+          if (success) {
+            this.setState({ modalVisible: false });
+          }
+        });
+      }
+    });
+  };
+
   render() {
+    const { modalVisible, type } = this.state;
+    const {
+      form: { getFieldDecorator },
+    } = this.props;
+
     return (
       <Fragment>
         <List
@@ -94,6 +201,26 @@ class SecurityView extends Component {
             </List.Item>
           )}
         />
+        <Modal
+          title="修改设置(目前先实现修改密码)"
+          visible={modalVisible}
+          onCancel={this.hideModal}
+          onOk={this.submit}
+          destroyOnClose
+        >
+          <Form>
+            {this.getFormItems(type).map(item => {
+              const { lable, key, inputType, rules } = item;
+              return (
+                <FormItem label={lable} key={key} {...formItemLayout}>
+                  {getFieldDecorator(key, {
+                    rules,
+                  })(<Input type={inputType} />)}
+                </FormItem>
+              );
+            })}
+          </Form>
+        </Modal>
       </Fragment>
     );
   }

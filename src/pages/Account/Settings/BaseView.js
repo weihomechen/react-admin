@@ -28,7 +28,7 @@ const uploadButton = (
 );
 
 const validatorGeographic = (rule, value, callback) => {
-  if (value.length === 0) {
+  if (!value || value.length === 0) {
     callback();
     return;
   }

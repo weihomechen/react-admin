@@ -82,7 +82,7 @@ export default {
         data: {
           type,
           currentAuthority: 'admin',
-        }
+        },
       });
       return;
     }
@@ -92,7 +92,7 @@ export default {
         data: {
           type,
           currentAuthority: 'user',
-        }
+        },
       });
       return;
     }
@@ -101,7 +101,7 @@ export default {
       data: {
         type,
         currentAuthority: 'guest',
-      }
+      },
     });
   },
   'POST /admin/api/register': (req, res) => {
@@ -142,5 +142,8 @@ export default {
       message: 'Unauthorized',
       path: '/base/category/list',
     });
+  },
+  'POST /admin/api/user/updateSecurity': (req, res) => {
+    res.send({ success: true });
   },
 };

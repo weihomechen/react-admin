@@ -13,3 +13,7 @@ export async function queryCurrent() {
 export async function updateUser(body) {
   return request('/admin/api/user/update', { method, body });
 }
+
+export async function updateSecurity(body) {
+  return request('/admin/api/user/updateSecurity', { method, body });
+}
