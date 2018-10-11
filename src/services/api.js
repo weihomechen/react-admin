@@ -110,7 +110,7 @@ export async function login(params) {
   });
 }
 
-export async function fakeRegister(params) {
+export async function register(params) {
   return request('/admin/api/user/register', {
     method: 'POST',
     body: params,
@@ -121,6 +121,6 @@ export async function queryNotices() {
   return request('/admin/api/notices');
 }
 
-export async function getFakeCaptcha(mobile) {
+export async function getCaptcha(mobile) {
   return request(`/admin/api/captcha?mobile=${mobile}`);
 }

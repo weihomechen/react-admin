@@ -3,7 +3,6 @@ import fetch from 'dva/fetch';
 import { notification, message } from 'antd';
 import router from 'umi/router';
 import hash from 'hash.js';
-import { isAntdPro } from './utils';
 
 const defaultErrMsg = '服务繁忙，请稍后再试';
 const codeMessage = {
@@ -134,8 +133,8 @@ export default function request(
         return response.text();
       }
       return response.json().then(res => {
-        !res.success && message.error(res.msg || defaultErrMsg)
-        return new Promise((resolve) => resolve(res));
+        !res.success && message.error(res.msg || defaultErrMsg);
+        return new Promise(resolve => resolve(res));
       });
     })
     .catch(e => {

@@ -53,6 +53,23 @@ class Register extends Component {
   }
 
   onGetCaptcha = () => {
+    const { form, dispatch } = this.props;
+
+    form.validateFields(['mobile'], { force: true }, (error, value) => {
+      if (!error) {
+        dispatch({
+          type: 'register/getCaptcha',
+          payload: value,
+        }).then(success => {
+          if (success) {
+            this.getCaptchaSuccess();
+          }
+        });
+      }
+    });
+  };
+
+  getCaptchaSuccess = () => {
     let count = 59;
     this.setState({ count });
     this.interval = setInterval(() => {
@@ -247,10 +264,15 @@ class Register extends Component {
                   rules: [
                     {
                       required: true,
-                      message: '模拟的验证码都为1234',
+                      message: '验证码服务可用（请留意短信），也可用模拟的验证码1234',
                     },
                   ],
-                })(<Input size="large" placeholder="模拟的验证码都为1234" />)}
+                })(
+                  <Input
+                    size="large"
+                    placeholder="验证码服务可用（请留意短信），也可用模拟的验证码1234"
+                  />
+                )}
               </Col>
               <Col span={8}>
                 <Button
