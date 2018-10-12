@@ -9,10 +9,10 @@ export default {
 
   effects: {
     *fetchNotice(_, { call, put }) {
-      const response = yield call(queryProjectNotice);
+      const { data } = yield call(queryProjectNotice);
       yield put({
         type: 'saveNotice',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(data) ? data : [],
       });
     },
   },

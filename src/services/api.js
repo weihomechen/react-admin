@@ -66,8 +66,8 @@ export async function queryAdvancedProfile() {
   return request('/admin/api/profile/advanced');
 }
 
-export async function queryFakeList(params) {
-  return request(`/admin/api/fake_list?${stringify(params)}`);
+export async function queryProjectList(params) {
+  return request(`/admin/api/project/list?${stringify(params)}`);
 }
 
 export async function removeFakeList(params) {

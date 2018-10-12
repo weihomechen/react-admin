@@ -1,4 +1,4 @@
-import { queryFakeList, removeFakeList, addFakeList, updateFakeList } from '@/services/api';
+import { queryProjectList, removeFakeList, addFakeList, updateFakeList } from '@/services/api';
 
 export default {
   namespace: 'list',
@@ -9,17 +9,17 @@ export default {
 
   effects: {
     *fetch({ payload }, { call, put }) {
-      const response = yield call(queryFakeList, payload);
+      const { data } = yield call(queryProjectList, payload);
       yield put({
         type: 'queryList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(data) ? data : [],
       });
     },
     *appendFetch({ payload }, { call, put }) {
-      const response = yield call(queryFakeList, payload);
+      const { data } = yield call(queryProjectList, payload);
       yield put({
         type: 'appendList',
-        payload: Array.isArray(response) ? response : [],
+        payload: Array.isArray(data) ? data : [],
       });
     },
     *submit({ payload }, { call, put }) {

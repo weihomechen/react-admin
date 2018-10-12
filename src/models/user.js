@@ -35,6 +35,7 @@ export default {
         message.success('信息更新成功');
         yield put({ type: 'fetchCurrent' });
       }
+      return success;
     },
     *updateSecurity({ payload }, { call, put }) {
       const { success } = yield call(updateSecurity, payload);

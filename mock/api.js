@@ -322,15 +322,15 @@ function getFakeCaptcha(req, res) {
 }
 
 export default {
-  'GET /admin/api/project/notice': getNotice,
-  'GET /admin/api/activities': getActivities,
+  'GET /admin/api/project/notice': { success: true, data: getNotice },
+  'GET /admin/api/activities': { success: true, data: getActivities },
   'POST /admin/api/forms': (req, res) => {
     res.send({ message: 'Ok' });
   },
   'GET /admin/api/tags': mockjs.mock({
     'list|100': [{ name: '@city', 'value|1-100': 150, 'type|0-2': 1 }],
   }),
-  'GET /admin/api/fake_list': getFakeList,
+  'GET /admin/api/project/list': { success: true, data: getFakeList },
   'POST /admin/api/fake_list': postFakeList,
   'GET /admin/api/captcha': getFakeCaptcha,
 };

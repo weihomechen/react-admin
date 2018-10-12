@@ -15,16 +15,14 @@ import styles from './Center.less';
 }))
 class Center extends PureComponent {
   state = {
-    newTags: [],
     inputVisible: false,
     inputValue: '',
   };
 
   componentDidMount() {
+    this.getCurrentUser();
+
     const { dispatch } = this.props;
-    dispatch({
-      type: 'user/fetchCurrent',
-    });
     dispatch({
       type: 'list/fetch',
       payload: {
@@ -35,6 +33,14 @@ class Center extends PureComponent {
       type: 'project/fetchNotice',
     });
   }
+
+  getCurrentUser = () => {
+    const { dispatch } = this.props;
+
+    dispatch({
+      type: 'user/fetchCurrent',
+    });
+  };
 
   onTabChange = key => {
     const { match } = this.props;
@@ -66,21 +72,31 @@ class Center extends PureComponent {
   };
 
   handleInputConfirm = () => {
-    const { state } = this;
+    const { state, props } = this;
     const { inputValue } = state;
-    let { newTags } = state;
-    if (inputValue && newTags.filter(tag => tag.label === inputValue).length === 0) {
-      newTags = [...newTags, { key: `new-${newTags.length}`, label: inputValue }];
+    const { dispatch, currentUser } = props;
+    const { tags } = currentUser;
+    if (inputValue) {
+      if (tags.find(v => v === inputValue)) {
+        return;
+      }
+
+      dispatch({
+        type: 'user/update',
+        payload: { tags: [...tags, inputValue] },
+      }).then(success => {
+        if (success) {
+          this.setState({
+            inputVisible: false,
+            inputValue: '',
+          });
+        }
+      });
     }
-    this.setState({
-      newTags,
-      inputVisible: false,
-      inputValue: '',
-    });
   };
 
   render() {
-    const { newTags, inputVisible, inputValue } = this.state;
+    const { inputVisible, inputValue } = this.state;
     const {
       listLoading,
       currentUser,
@@ -91,13 +107,16 @@ class Center extends PureComponent {
       location,
       children,
     } = this.props;
+    const { geographic, tags = [] } = currentUser;
+
+    const { province = {}, city = {} } = geographic || {};
 
     const operationTabList = [
       {
         key: 'articles',
         tab: (
           <span>
-            文章 <span style={{ fontSize: 14 }}>(8)</span>
+            文章 <span style={{ fontSize: 14 }}>(0)</span>
           </span>
         ),
       },
@@ -105,7 +124,7 @@ class Center extends PureComponent {
         key: 'applications',
         tab: (
           <span>
-            应用 <span style={{ fontSize: 14 }}>(8)</span>
+            应用 <span style={{ fontSize: 14 }}>(0)</span>
           </span>
         ),
       },
@@ -113,7 +132,7 @@ class Center extends PureComponent {
         key: 'projects',
         tab: (
           <span>
-            项目 <span style={{ fontSize: 14 }}>(8)</span>
+            项目 <span style={{ fontSize: 14 }}>(0)</span>
           </span>
         ),
       },
@@ -142,15 +161,15 @@ class Center extends PureComponent {
                     </p>
                     <p>
                       <i className={styles.address} />
-                      {currentUser.geographic.province.label}
-                      {currentUser.geographic.city.label}
+                      {province.label}
+                      {city.label}
                     </p>
                   </div>
                   <Divider dashed />
                   <div className={styles.tags}>
                     <div className={styles.tagsTitle}>标签</div>
-                    {currentUser.tags.concat(newTags).map(item => (
-                      <Tag key={item.key}>{item.label}</Tag>
+                    {tags.map(item => (
+                      <Tag key={item}>{item}</Tag>
                     ))}
                     {inputVisible && (
                       <Input
