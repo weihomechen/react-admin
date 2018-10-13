@@ -50,8 +50,8 @@ export async function fakeSubmitForm(params) {
   });
 }
 
-export async function fakeChartData() {
-  return request('/admin/api/fake_chart_data');
+export async function fetchChartData() {
+  return request('/admin/api/chart/list');
 }
 
 export async function queryTags() {
