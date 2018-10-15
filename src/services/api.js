@@ -55,7 +55,7 @@ export async function fetchChartData() {
 }
 
 export async function queryTags() {
-  return request('/admin/api/tags');
+  return request('/admin/api/tags/list');
 }
 
 export async function queryBasicProfile() {

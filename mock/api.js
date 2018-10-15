@@ -327,7 +327,7 @@ export default {
   'POST /admin/api/forms': (req, res) => {
     res.send({ message: 'Ok' });
   },
-  'GET /admin/api/tags': mockjs.mock({
+  'GET /admin/api/tags/list': mockjs.mock({
     'list|100': [{ name: '@city', 'value|1-100': 150, 'type|0-2': 1 }],
   }),
   'GET /admin/api/project/list': { success: true, data: getFakeList },

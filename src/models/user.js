@@ -1,5 +1,7 @@
 import { query as queryUsers, queryCurrent, updateUser, updateSecurity } from '@/services/user';
 import { message } from 'antd';
+import { stringify } from 'qs';
+import { routerRedux } from 'dva/router';
 
 export default {
   namespace: 'user',
@@ -18,11 +20,22 @@ export default {
       });
     },
     *fetchCurrent(_, { call, put }) {
-      const { data } = yield call(queryCurrent);
-      yield put({
-        type: 'saveCurrentUser',
-        payload: data,
-      });
+      const { data, success } = yield call(queryCurrent);
+      if (success) {
+        yield put({
+          type: 'saveCurrentUser',
+          payload: data,
+        });
+      } else {
+        yield put(
+          routerRedux.push({
+            pathname: '/user/login',
+            search: stringify({
+              redirect: window.location.href,
+            }),
+          })
+        );
+      }
     },
     *update({ payload }, { call, put, select }) {
       const { currentUser } = yield select(state => state.user);

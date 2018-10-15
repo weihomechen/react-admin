@@ -36,14 +36,6 @@ import styles from './Analysis.less';
 const { TabPane } = Tabs;
 const { RangePicker } = DatePicker;
 
-const rankingListData = [];
-for (let i = 0; i < 7; i += 1) {
-  rankingListData.push({
-    title: `工专路 ${i} 号店`,
-    total: 323234,
-  });
-}
-
 @connect(({ chart, loading }) => ({
   chart,
   loading: loading.effects['chart/fetch'],
@@ -54,8 +46,8 @@ class Analysis extends Component {
     this.rankingListData = [];
     for (let i = 0; i < 7; i += 1) {
       this.rankingListData.push({
-        title: formatMessage({ id: 'app.analysis.test' }, { no: i }),
-        total: 323234,
+        title: `云起路 ${i} 号店`,
+        total: 233333,
       });
     }
     this.state = {
@@ -74,6 +66,7 @@ class Analysis extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
+
     this.reqRef = requestAnimationFrame(() => {
       dispatch({
         type: 'chart/fetch',
@@ -88,6 +81,7 @@ class Analysis extends Component {
 
   componentWillUnmount() {
     const { dispatch } = this.props;
+
     dispatch({
       type: 'chart/clear',
     });
@@ -506,8 +500,16 @@ class Analysis extends Component {
                       <ul className={styles.rankingList}>
                         {this.rankingListData.map((item, i) => (
                           <li key={item.title}>
-                            <span className={i < 3 ? styles.active : ''}>{i + 1}</span>
-                            <span>{item.title}</span>
+                            <span
+                              className={`${styles.rankingItemNumber} ${
+                                i < 3 ? styles.active : ''
+                              }`}
+                            >
+                              {i + 1}
+                            </span>
+                            <span className={styles.rankingItemTitle} title={item.title}>
+                              {item.title}
+                            </span>
                             <span>{numeral(item.total).format('0,0')}</span>
                           </li>
                         ))}

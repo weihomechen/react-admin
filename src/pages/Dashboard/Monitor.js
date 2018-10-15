@@ -48,7 +48,7 @@ class Monitor extends PureComponent {
                   <NumberInfo
                     subTitle="今日交易总额"
                     suffix="元"
-                    total={numeral(124543233).format('0,0')}
+                    total={numeral(233233).format('0,0')}
                   />
                 </Col>
                 <Col md={6} sm={12} xs={24}>
