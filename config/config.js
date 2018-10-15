@@ -39,6 +39,9 @@ export default {
     APP_TYPE: process.env.APP_TYPE || '',
     MOCK: process.env.MOCK || '',
   },
+  base: '/react-admin/',
+  // runtimePublicPath: true,
+  publicPath: '/react-admin/',
   // 路由配置
   routes: pageRoutes,
   // Theme for antd
