@@ -38,6 +38,7 @@ export default {
             return;
           }
         }
+        redirect = redirect.replace(/\/react-admin/, '');
         yield put(routerRedux.replace(redirect || '/'));
       }
     },

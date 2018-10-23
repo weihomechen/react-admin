@@ -1,5 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { Table, Alert } from 'antd';
+import classNames from 'classnames';
 import styles from './index.less';
 
 function initTotalList(columns) {
@@ -44,7 +45,7 @@ class StandardTable extends PureComponent {
     }));
     const { onSelectRow } = this.props;
     if (onSelectRow) {
-      onSelectRow(selectedRows);
+      onSelectRow(selectedRows, selectedRowKeys);
     }
 
     this.setState({ selectedRowKeys, needTotalList });
@@ -68,11 +69,13 @@ class StandardTable extends PureComponent {
       loading,
       columns,
       rowKey,
+      className,
     } = this.props;
 
     const paginationProps = {
       showSizeChanger: true,
       showQuickJumper: true,
+      showTotal: v => `共${v}条`,
       ...pagination,
     };
 
@@ -85,7 +88,7 @@ class StandardTable extends PureComponent {
     };
 
     return (
-      <div className={styles.standardTable}>
+      <div className={classNames(styles.standardTable, className)}>
         <div className={styles.tableAlert}>
           <Alert
             message={

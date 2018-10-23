@@ -1,0 +1,32 @@
+@import '~@/utils/utils.less';
+.searchForm {
+  margin: 16px 0;
+}
+
+.operators {
+  margin: 16px 0;
+}
+
+.table {
+  .avatar {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+  }
+  .activeUser {
+    color: #fff;
+    background: @active-color;
+  }
+  .activeUser:hover,
+  .activeUser:focus {
+    border-color: @active-color;
+  }
+  .disabledUser {
+    color: #fff;
+    background: @forbid-color;
+  }
+  .disabledUser:hover,
+  .disabledUser:focus {
+    border-color: @forbid-color;
+  }
+}

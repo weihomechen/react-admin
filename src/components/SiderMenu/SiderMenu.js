@@ -8,6 +8,8 @@ import BaseMenu, { getMenuMatches } from './BaseMenu';
 import { urlToList } from '../_utils/pathTools';
 
 const { Sider } = Layout;
+const defaultLogoSrc =
+  'http://admin-node.oss-cn-hangzhou.aliyuncs.com/jY8itYstfzREBNAQ2ZYbY2cZPtjB5ihR.png';
 
 /**
  * 获得菜单子节点
@@ -109,7 +111,7 @@ export default class SiderMenu extends PureComponent {
       >
         <div className={styles.logo} id="logo">
           <Link to="/">
-            <img src={logo} alt="logo" />
+            <img src={logo || defaultLogoSrc} alt="logo" />
             <h1>React Admin</h1>
           </Link>
         </div>

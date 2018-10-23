@@ -38,6 +38,7 @@ export default {
   'menu.account.settings': '个人设置',
   'menu.account.trigger': '触发报错',
   'menu.account.logout': '退出登录',
+  'menu.userManage': '用户管理',
   'app.home.introduce': '介绍',
   'app.analysis.test': '工专路 {no} 号店',
   'app.analysis.introduce': '指标说明',

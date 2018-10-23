@@ -178,6 +178,18 @@ export function formatWan(val) {
   return result;
 }
 
+export const userRoleMap = {
+  admin: '管理员',
+  user: '普通用户',
+};
+
+export const userStatusMap = {
+  0: '禁用中',
+  1: '启用中',
+};
+
+export const DATE_FORMATTER = 'YYYY-MM-DD HH:mm:ss';
+
 // export function isAntdPro() {
 //   return window.location.hostname === 'preview.pro.ant.design';
 // }

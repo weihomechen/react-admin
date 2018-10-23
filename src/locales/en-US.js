@@ -36,6 +36,7 @@ export default {
   'menu.account.settings': 'Account Settings',
   'menu.account.trigger': 'Trigger Error',
   'menu.account.logout': 'Logout',
+  'menu.userManage': 'userManage',
   'app.home.introduce': 'introduce',
   'app.analysis.test': 'Gongzhuan No.{no} shop',
   'app.analysis.introduce': 'Introduce',

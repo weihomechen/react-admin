@@ -73,13 +73,13 @@ export default {
           .split('/')
           .map(a => a.replace(/([A-Z])/g, '-$1'))
           .map(a => a.toLowerCase());
-        return `antd-pro${arr.join('-')}-${localName}`.replace(/--/g, '-');
+        return `react-admin${arr.join('-')}-${localName}`.replace(/--/g, '-');
       }
       return localName;
     },
   },
   manifest: {
-    name: 'ant-design-pro',
+    name: 'react-admin',
     background_color: '#FFF',
     description: 'An out-of-box UI solution for enterprise applications as a React boilerplate.',
     display: 'standalone',
@@ -87,7 +87,7 @@ export default {
     icons: [
       {
         src: '/favicon.png',
-        sizes: '48x48',
+        sizes: '64x64',
         type: 'image/png',
       },
     ],

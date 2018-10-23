@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd';
 import Link from 'umi/link';
 import { formatMessage } from 'umi/locale';
 import pathToRegexp from 'path-to-regexp';
+import IconFont from '../IconFont';
 import { urlToList } from '../_utils/pathTools';
 import styles from './index.less';
 
@@ -19,6 +20,10 @@ const getIcon = icon => {
   if (typeof icon === 'string') {
     return <Icon type={icon} />;
   }
+  if (typeof icon === 'object') {
+    return <IconFont type={`icon-${icon.type}`} />;
+  }
+
   return icon;
 };
 
