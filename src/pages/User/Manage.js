@@ -61,7 +61,8 @@ class UserManage extends Component {
       title: '地址',
       dataIndex: 'address',
       render: (v, r) => {
-        const { geographic: { province = {}, city = {} } = {} } = r;
+        const { geographic = {} } = r;
+        const { province = {}, city = {} } = geographic || {};
         return `${province.label || ''}${city.label || ''} ${v || ''}`;
       },
     },
