@@ -44,6 +44,7 @@ export default [
       {
         path: '/userManage',
         name: 'userManage',
+        authority: ['admin'],
         icon: {
           type: 'manager',
         },
@@ -91,7 +92,6 @@ export default [
           {
             path: '/form/advanced-form',
             name: 'advancedform',
-            // authority: ['admin'],
             component: './Forms/AdvancedForm',
           },
         ],
